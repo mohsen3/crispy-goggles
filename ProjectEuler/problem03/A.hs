@@ -1,3 +1,10 @@
-main = do
-  let num = 600851475143
-  print $ last $ filter (\n -> num `mod` n == 0) [1..(round $ sqrt num)]
+
+primeFactors n =
+  let
+    factors = take 1 $ filter ((== 0) . (n `mod`)) [2 .. n - 1]
+  in
+    case factors of
+      [] -> [n]
+      _  -> factors ++ primeFactors (n `div` (head factors))
+
+main = print $ maximum $ primeFactors 600851475143
